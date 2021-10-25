@@ -22,8 +22,8 @@ json_data2 = {
     
 while True:
     str1 = ser.write(json_data)
-    print(str)
+    print(str1)
     time.sleep(250)
     str1 = ser.write(json_data2)
-    print(str)
+    print(str1)
     time.sleep(250)
