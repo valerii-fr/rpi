@@ -24,6 +24,8 @@ laser_i = 128                   #laser intensity
 #json_stop = "{\"act\":0,\"spd\":150,\"angle_v\":90,\"angle_h\":90,\"laser_i\":128} \n"
 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
 json = json.dumps(data_set)
+ser = serial.Serial('/dev/ttyS0', 19200, timeout=1)
+ser.flush()
 
 for event in vrbox.read_loop():
     if event.type == ecodes.EV_KEY:
