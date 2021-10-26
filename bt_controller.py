@@ -1,4 +1,5 @@
 from evdev import InputDevice, categorize, ecodes
+from threading import Timer
 import serial
 import time
 import threading
@@ -29,11 +30,6 @@ json_str = json.dumps(data_set)
 ser = serial.Serial('/dev/ttyS0', 19200, timeout=1)
 ser.flush()
 
-
-def newTimer()
-    global timeout_obj
-    timeout_obj = Timer(0.03, stop_by_timer)
-    
 def stop_by_timer():
     act = 0
     spd = 0
@@ -42,7 +38,10 @@ def stop_by_timer():
     print(json_str)
     ser.write(str(json_str) .encode('ascii'))
     
-threading.Timer(0.02, check_flag).start()
+def newTimer():
+    global timeout_obj
+    timeout_obj = Timer(0.03, stop_by_timer)
+newTimer()    
 
 for event in vrbox.read_loop():
     if event.type == ecodes.EV_KEY:
