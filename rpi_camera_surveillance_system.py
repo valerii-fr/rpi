@@ -8,6 +8,9 @@ import logging
 import socketserver
 from threading import Condition
 from http import server
+import serial
+import time
+import json
 
 PAGE="""\
 <html>
@@ -20,6 +23,12 @@ PAGE="""\
 </body>
 </html>
 """
+ser = serial.Serial('/dev/ttyS0', 19200, timeout=1)
+ser.flush()
+
+json_data = "{\"act\":1,\"spd\":150,\"angle_v\":90,\"angle_h\":90,\"laser_i\":128} \n"
+    
+json_data2 = "{\"act\":0,\"spd\":150,\"angle_v\":80,\"angle_h\":80,\"laser_i\":128} \n"
 
 class StreamingOutput(object):
     def __init__(self):
@@ -69,6 +78,12 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                     self.end_headers()
                     self.wfile.write(frame)
                     self.wfile.write(b'\r\n')
+                    str1 = ser.write(str(json_data) .encode('ascii'))
+                    print(str1)
+                    time.sleep(0.25)
+                    str1 = ser.write(str(json_data2) .encode('ascii'))
+                    print(str1)
+                    time.sleep(0.25)
             except Exception as e:
                 logging.warning(
                     'Removed streaming client %s: %s',
