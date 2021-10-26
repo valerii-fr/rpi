@@ -105,7 +105,7 @@ def capture_video():
         finally:
             camera.stop_recording()
 
-def move_robot()
+def move_robot():
     while True:
         str1 = ser.write(str(json_data) .encode('ascii'))
         print(str1)
