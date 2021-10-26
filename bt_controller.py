@@ -20,6 +20,6 @@ for event in vrbox.read_loop():
                 print("DOWN")
     elif event.type == ecodes.EV_REL:
         if event.code == x_var:
-            print(event.value)
+            print("X: " & event.value)
         elif event.code == y_var:
-            print(event.value)
+            print("Y: " & event.value)
