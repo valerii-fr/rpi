@@ -42,7 +42,7 @@ for event in vrbox.read_loop():
                 act = 3
                 json_str = json.dumps(data_set)
                 ser.write(str(json_str) .encode('ascii'))
-                sleep(0.03)
+                time.sleep(0.03)
                 act = 0
                 json_str = json.dumps(data_set)
                 ser.write(str(json_str) .encode('ascii'))
@@ -50,7 +50,7 @@ for event in vrbox.read_loop():
                 act = 4
                 json_str = json.dumps(data_set)
                 ser.write(str(json_str) .encode('ascii'))
-                sleep(0.03)
+                time.sleep(0.03)
                 act = 0
                 json_str = json.dumps(data_set)
                 ser.write(str(json_str) .encode('ascii'))
