@@ -36,5 +36,21 @@ for event in vrbox.read_loop():
     elif event.type == ecodes.EV_REL:
         if event.code == x_var:
             print("X: {x}" .format(x=event.value))
+            if event.value > 0:
+                act = 3
+                json = json.dumps(data_set)
+                ser.write(str(json) .encode('ascii'))
+                sleep(0.03)
+                act = 0
+                json = json.dumps(data_set)
+                ser.write(str(json) .encode('ascii'))
+            elif event.value < 0:
+                act = 4
+                json = json.dumps(data_set)
+                ser.write(str(json) .encode('ascii'))
+                sleep(0.03)
+                act = 0
+                json = json.dumps(data_set)
+                ser.write(str(json) .encode('ascii'))
         elif event.code == y_var:
             print("Y: {y}".format(y=event.value))
