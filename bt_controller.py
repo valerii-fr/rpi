@@ -7,9 +7,9 @@ print("VR BOX Controller test")
 vrbox = InputDevice('/dev/input/event2')
 
 btnUp = 273
-btnDown = 274
+btnDown = 272
 x_var = 0
-y_var = 0
+y_var = 1
 
 for event in vrbox.read_loop():
     if event.type == ecodes.EV_KEY:
