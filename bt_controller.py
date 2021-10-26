@@ -79,6 +79,9 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
+                timeout_obj.cancel()
+                newTimer()
+                timeout_obj.start()
             if event.value < 0:
                 act = 2
                 spd = 64 + event.value * (-5)
@@ -86,6 +89,9 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
+                timeout_obj.cancel()
+                newTimer()
+                timeout_obj.start()
         elif event.code == y_var:
             print("Y: {y}".format(y=event.value))
             if event.value < 0:
@@ -95,6 +101,9 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
+                timeout_obj.cancel()
+                newTimer()
+                timeout_obj.start()
             if event.value > 0:
                 act = 4
                 spd = 64 + event.value * 5
@@ -102,4 +111,6 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                
+                timeout_obj.cancel()
+                newTimer()
+                timeout_obj.start()
