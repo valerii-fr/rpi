@@ -45,21 +45,28 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                time.sleep(0.02)
-                act = 0
-                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-                json_str = json.dumps(data_set)
-                print(json_str)
-                ser.write(str(json_str) .encode('ascii'))
-            elif event.value < 0:
+                #time.sleep(0.02)
+                #act = 0
+                #data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                #json_str = json.dumps(data_set)
+                #print(json_str)
+                #ser.write(str(json_str) .encode('ascii'))
+            if event.value < 0:
                 act = 4
                 spd = 128 + event.value * (-3.5)
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                time.sleep(0.02)
+                #time.sleep(0.02)
+                #act = 0
+                #data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                #json_str = json.dumps(data_set)
+                #print(json_str)
+                #ser.write(str(json_str) .encode('ascii'))
+            if event.value == 0:
                 act = 0
+                spd = 0
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
