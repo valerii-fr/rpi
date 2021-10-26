@@ -7,7 +7,7 @@ ser.flush()
 
 json_data = "{\"act\":1,\"spd\":128,\"angle_v\":90,\"angle_h\":90,\"laser_i\":128} \n"
     
-json_data2 = "{\"act\":0,\"spd\":128,\"angle_v\":90,\"angle_h\":90,\"laser_i\":128} \n"
+json_data2 = "{\"act\":0,\"spd\":128,\"angle_v\":80,\"angle_h\":80,\"laser_i\":128} \n"
     
 while True:
     str1 = ser.write(str(json_data) .encode('ascii'))
