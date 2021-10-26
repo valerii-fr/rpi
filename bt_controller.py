@@ -41,18 +41,22 @@ for event in vrbox.read_loop():
             if event.value > 0:
                 act = 3
                 json_str = json.dumps(data_set)
+                print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
                 time.sleep(0.03)
                 act = 0
                 json_str = json.dumps(data_set)
+                print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
             elif event.value < 0:
                 act = 4
                 json_str = json.dumps(data_set)
+                print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
                 time.sleep(0.03)
                 act = 0
                 json_str = json.dumps(data_set)
+                print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
         elif event.code == y_var:
             print("Y: {y}".format(y=event.value))
