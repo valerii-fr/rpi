@@ -31,9 +31,7 @@ json_data = "{\"act\":1,\"spd\":150,\"angle_v\":90,\"angle_h\":90,\"laser_i\":12
     
 json_data2 = "{\"act\":0,\"spd\":150,\"angle_v\":80,\"angle_h\":80,\"laser_i\":128} \n"
 
-
-def capture_video():
-    class StreamingOutput(object):
+class StreamingOutput(object):
         def __init__(self):
             self.frame = None
             self.buffer = io.BytesIO()
@@ -93,6 +91,7 @@ def capture_video():
         allow_reuse_address = True
         daemon_threads = True
 
+def capture_video():
     with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
         output = StreamingOutput()
         #Uncomment the next line to change your Pi's Camera rotation (in degrees)
