@@ -48,11 +48,19 @@ for event in vrbox.read_loop():
         if event.value == 1:
             if event.code == btnUp:
                 print("UP")
+                act = 0
+                spd = 0
+                angle_v = angle_v + 5;
+                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                json_str = json.dumps(data_set)
+                print(json_str)
+                ser.write(str(json_str) .encode('ascii'))
             elif event.code == btnDown:
                 print("DOWN")
                 print(json_str)
                 act = 0
                 spd = 0
+                angle_v = angle_v - 5;
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
