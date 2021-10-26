@@ -12,7 +12,7 @@ json_data2 = "{\"act\":0,\"spd\":128,\"angle_v\":90,\"angle_h\":90,\"laser_i\":1
 while True:
     str1 = ser.write(str(json_data) .encode('ascii'))
     print(str1)
-    time.sleep(250)
+    time.sleep(0.25)
     str1 = ser.write(str(json_data2) .encode('ascii'))
     print(str1)
-    time.sleep(250)
+    time.sleep(0.25)
