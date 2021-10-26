@@ -30,15 +30,14 @@ ser = serial.Serial('/dev/ttyS0', 19200, timeout=1)
 ser.flush()
 
 def check_flag():
-    if flag == 0:
-        nop()
-    elif flag == 1:
+    if flag == 1:
         act = 0
         spd = 0
         data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
         json_str = json.dumps(data_set)
         print(json_str)
         ser.write(str(json_str) .encode('ascii'))
+        flag = 0
     threading.Timer(0.02, check_flag).start()
 
 check_flag()
