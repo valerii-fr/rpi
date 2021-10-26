@@ -23,7 +23,7 @@ laser_i = 128                   #laser intensity
 
 #json_stop = "{\"act\":0,\"spd\":150,\"angle_v\":90,\"angle_h\":90,\"laser_i\":128} \n"
 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-json = json.dumps(data_set)
+json_str = json.dumps(data_set)
 ser = serial.Serial('/dev/ttyS0', 19200, timeout=1)
 ser.flush()
 
@@ -34,21 +34,25 @@ for event in vrbox.read_loop():
                 print("UP")
             elif event.code == btnDown:
                 print("DOWN")
-                print(json)
+                print(json_str)
     elif event.type == ecodes.EV_REL:
         if event.code == x_var:
             print("X: {x}" .format(x=event.value))
             if event.value > 0:
                 act = 3
-                ser.write(json.dumps(data_set).encode('ascii'))
+                json_str = json.dumps(data_set)
+                ser.write(str(json_str) .encode('ascii'))
                 sleep(0.03)
                 act = 0
-                ser.write(json.dumps(data_set).encode('ascii'))
+                json_str = json.dumps(data_set)
+                ser.write(str(json_str) .encode('ascii'))
             elif event.value < 0:
                 act = 4
-                ser.write(json.dumps(data_set).encode('ascii'))
+                json_str = json.dumps(data_set)
+                ser.write(str(json_str) .encode('ascii'))
                 sleep(0.03)
                 act = 0
-                ser.write(json.dumps(data_set).encode('ascii'))
+                json_str = json.dumps(data_set)
+                ser.write(str(json_str) .encode('ascii'))
         elif event.code == y_var:
             print("Y: {y}".format(y=event.value))
