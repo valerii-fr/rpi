@@ -28,20 +28,16 @@ data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i
 json_str = json.dumps(data_set)
 ser = serial.Serial('/dev/ttyS0', 19200, timeout=1)
 ser.flush()
+timeout_obj = []
 
-def check_flag():
-    if flag == 1:
-        act = 0
-        spd = 0
-        data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-        json_str = json.dumps(data_set)
-        print(json_str)
-        ser.write(str(json_str) .encode('ascii'))
-        flag = 0
-    threading.Timer(0.02, check_flag).start()
-
-check_flag()
-
+def timer_reaction():
+    act = 0
+    spd = 0
+    data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+    json_str = json.dumps(data_set)
+    print(json_str)
+    ser.write(str(json_str) .encode('ascii'))
+    
 for event in vrbox.read_loop():
     if event.type == ecodes.EV_KEY:
         if event.value == 1:
@@ -57,63 +53,41 @@ for event in vrbox.read_loop():
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
     elif event.type == ecodes.EV_REL:
+        self.timeout_obj.cancel()
         if event.code == x_var:
             print("X: {x}" .format(x=event.value))
             if event.value > 0:
-                flag = 0
                 act = 1
                 spd = 128 + event.value * 3.5
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                #time.sleep(0.02)
-                #act = 0
-                #data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-                #json_str = json.dumps(data_set)
-                #print(json_str)
-                #ser.write(str(json_str) .encode('ascii'))
-                flag = 1
+                timeout_obj = threading.Timer(0.05, timer_reaction)
             if event.value < 0:
-                flag = 0
                 act = 2
                 spd = 128 + event.value * (-3.5)
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                flag = 1
+                timeout_obj = threading.Timer(0.05, timer_reaction)
         elif event.code == y_var:
             print("Y: {y}".format(y=event.value))
             if event.value < 0:
-                flag = 0
                 act = 3
                 spd = 128 + event.value * (-3.5)
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                #time.sleep(0.02)
-                #act = 0
-                #data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-                #json_str = json.dumps(data_set)
-                #print(json_str)
-                #ser.write(str(json_str) .encode('ascii'))
-                flag = 1
+                timeout_obj = threading.Timer(0.05, timer_reaction)
             if event.value > 0:
-                flag = 0
                 act = 4
                 spd = 128 + event.value * 3.5
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                #time.sleep(0.02)
-                #act = 0
-                #data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-                #json_str = json.dumps(data_set)
-                #print(json_str)
-                #ser.write(str(json_str) .encode('ascii'))
-                flag = 1
-            #if event.value == 0:
+                timeout_obj = threading.Timer(0.05, timer_reaction)
                 
