@@ -28,9 +28,13 @@ data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i
 json_str = json.dumps(data_set)
 ser = serial.Serial('/dev/ttyS0', 19200, timeout=1)
 ser.flush()
-timeout_obj = []
 
-def timer_reaction():
+
+def newTimer()
+    global timeout_obj
+    timeout_obj = Timer(0.03, stop_by_timer)
+    
+def stop_by_timer():
     act = 0
     spd = 0
     data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
@@ -38,6 +42,8 @@ def timer_reaction():
     print(json_str)
     ser.write(str(json_str) .encode('ascii'))
     
+threading.Timer(0.02, check_flag).start()
+
 for event in vrbox.read_loop():
     if event.type == ecodes.EV_KEY:
         if event.value == 1:
@@ -53,7 +59,10 @@ for event in vrbox.read_loop():
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
     elif event.type == ecodes.EV_REL:
-        self.timeout_obj.cancel()
+        timeout_obj.cancel()
+        newTimer()
+        timeout_obj.start()
+        
         if event.code == x_var:
             print("X: {x}" .format(x=event.value))
             if event.value > 0:
@@ -63,7 +72,6 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                timeout_obj = threading.Timer(0.05, timer_reaction)
             if event.value < 0:
                 act = 2
                 spd = 128 + event.value * (-3.5)
@@ -71,7 +79,6 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                timeout_obj = threading.Timer(0.05, timer_reaction)
         elif event.code == y_var:
             print("Y: {y}".format(y=event.value))
             if event.value < 0:
@@ -81,7 +88,6 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                timeout_obj = threading.Timer(0.05, timer_reaction)
             if event.value > 0:
                 act = 4
                 spd = 128 + event.value * 3.5
@@ -89,5 +95,4 @@ for event in vrbox.read_loop():
                 json_str = json.dumps(data_set)
                 print(json_str)
                 ser.write(str(json_str) .encode('ascii'))
-                timeout_obj = threading.Timer(0.05, timer_reaction)
                 
