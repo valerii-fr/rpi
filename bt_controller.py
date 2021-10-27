@@ -48,19 +48,18 @@ for event in vrbox.read_loop():
         if event.value == 1:
             if event.code == btnUp:
                 print("UP")
-                act = 0
-                spd = 0
-                angle_h = angle_h - 5;
-                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-                json_str = json.dumps(data_set)
-                print(json_str)
-                ser.write(str(json_str) .encode('ascii'))
             elif event.code == btnDown:
                 print("DOWN")
                 print(json_str)
                 act = 0
                 spd = 0
-                angle_h = angle_h + 5;
+                laser_i = 0
+                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                json_str = json.dumps(data_set)
+                print(json_str)
+                ser.write(str(json_str) .encode('ascii'))
+                time.sleep(0.03)
+                laser_i = 255
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
@@ -74,7 +73,7 @@ for event in vrbox.read_loop():
             print("X: {x}" .format(x=event.value))
             if event.value > 0:
                 act = 1
-                spd = 64 + event.value * 3
+                spd = 100 + event.value * 3
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
@@ -84,7 +83,7 @@ for event in vrbox.read_loop():
                 timeout_obj.start()
             if event.value < 0:
                 act = 2
-                spd = 64 + event.value * (-3)
+                spd = 100 + event.value * (-3)
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
