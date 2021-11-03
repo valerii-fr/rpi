@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import cv2
+import video
 face_cascade = cv2.CascadeClassifier('/home/pi/downloads/opencv-master/data/haarcascades/haarcascade_frontalface_default.xml')
 class VideoCamera(object):
     def __init__(self):
@@ -27,7 +28,7 @@ class VideoCamera(object):
         faces = face_cascade.detectMultiScale(image, 1.3, 5)
         for (x, y, w, h) in faces:
             cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            cv2.putText(image, x, (20,20), cv2.FONT_HERSHEY_SIMPLEX, 1, color_yellow, 2)
-            cv2.putText(image, y, (20,40), cv2.FONT_HERSHEY_SIMPLEX, 1, color_yellow, 2)
+            cv2.putText(image, str(x), (0,20), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, color_yellow, 1)
+            cv2.putText(image, str(y), (0,40), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, color_yellow, 1)
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
