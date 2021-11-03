@@ -39,8 +39,8 @@ class VideoCamera(object):
         # instead.
         self.video = cv2.VideoCapture(0)
         self.video.set(cv2.CAP_PROP_BUFFERSIZE,4)
-        self.video.set(cv2.CAP_PROP_FRAME_WIDTH,640)
-        self.video.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+        self.video.set(cv2.CAP_PROP_FRAME_WIDTH,320)
+        self.video.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
         self.video.set(cv2.CAP_PROP_FPS,30)
         
         # If you decide to use video.mp4, you must have this file in the folder
@@ -64,7 +64,7 @@ class VideoCamera(object):
             cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
             cv2.putText(image, str(x), (0,20), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.5, color_yellow, 1)
             cv2.putText(image, str(y), (0,40), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.5, color_yellow, 1)
-            if x < 160:
+            if x < 80:
                 act = 1
                 spd = 150
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
@@ -74,7 +74,7 @@ class VideoCamera(object):
                 timeout_obj.cancel()
                 newTimer()
                 timeout_obj.start()
-            if x > 320:
+            if x > 240:
                 act = 2
                 spd = 150
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
