@@ -38,8 +38,8 @@ def main():
         # Draw a rectangle around the faces
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        cv2.imshow('Video', frame)
-        StreamProps.set_Capture(StreamProps,frame)
+        ret, frame = cv2.imencode('.jpg', capture)
+        StreamProps.set_Capture(StreamProps,capture)
         StreamProps.set_Quality(StreamProps,90)
         server = ps.Streamer(address,StreamProps)
         print('Server started at','http://'+address[0]+':'+str(address[1]))
