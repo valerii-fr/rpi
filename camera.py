@@ -62,7 +62,7 @@ class VideoCamera(object):
             cv2.putText(image, str(y), (0,40), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.5, color_yellow, 1)
             if x < 160:
                 act = 1
-                spd = 100
+                spd = 150
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
@@ -72,7 +72,7 @@ class VideoCamera(object):
                 timeout_obj.start()
             if x > 320:
                 act = 2
-                spd = 100
+                spd = 150
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
                 json_str = json.dumps(data_set)
                 print(json_str)
@@ -80,6 +80,7 @@ class VideoCamera(object):
                 timeout_obj.cancel()
                 newTimer()
                 timeout_obj.start()
-                
+            if ((x > 159) & (x < 320)):
+                stop_by_timer()
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
