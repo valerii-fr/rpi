@@ -19,7 +19,7 @@ def main():
     StreamProps.set_Page(StreamProps,HTML)
     address = ('192.168.1.1',9000) # Enter your IP address 
     try:
-        faceCascade = CascadeClassifier('haarcascade_frontalface_default.xml')
+        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         StreamProps.set_Mode(StreamProps,'cv2')
         capture = cv2.VideoCapture(0)
         capture.set(cv2.CAP_PROP_BUFFERSIZE,4)
