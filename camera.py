@@ -65,16 +65,6 @@ class VideoCamera(object):
             cv2.putText(image, str(x), (0,20), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.5, color_yellow, 1)
             cv2.putText(image, str(y), (0,40), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.5, color_yellow, 1)
             if x < 80:
-                act = 1
-                spd = 150
-                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-                json_str = json.dumps(data_set)
-                print(json_str)
-                ser.write(str(json_str) .encode('ascii'))
-                timeout_obj.cancel()
-                newTimer()
-                timeout_obj.start()
-            if x > 160:
                 act = 2
                 spd = 150
                 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
@@ -84,5 +74,22 @@ class VideoCamera(object):
                 timeout_obj.cancel()
                 newTimer()
                 timeout_obj.start()
+            if x > 160:
+                act = 1
+                spd = 150
+                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                json_str = json.dumps(data_set)
+                print(json_str)
+                ser.write(str(json_str) .encode('ascii'))
+                timeout_obj.cancel()
+                newTimer()
+                timeout_obj.start()
+            if ((x > 80) & (x < 161)):
+                act = 0
+                spd = 0
+                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                json_str = json.dumps(data_set)
+                print(json_str)
+                ser.write(str(json_str) .encode('ascii'))
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
