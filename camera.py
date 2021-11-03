@@ -51,6 +51,10 @@ class VideoCamera(object):
         self.video.release()
     
     def get_frame(self):
+        timeout_obj.cancel()
+        newTimer()
+        timeout_obj.start()
+        
         success, image = self.video.read()
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
