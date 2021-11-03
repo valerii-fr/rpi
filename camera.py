@@ -8,8 +8,8 @@ class VideoCamera(object):
         # instead.
         self.video = cv2.VideoCapture(0)
         self.video.set(cv2.CAP_PROP_BUFFERSIZE,4)
-        self.video.set(cv2.CAP_PROP_FRAME_WIDTH,320)
-        self.video.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
+        self.video.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+        self.video.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
         self.video.set(cv2.CAP_PROP_FPS,30)
         
         # If you decide to use video.mp4, you must have this file in the folder
@@ -27,5 +27,7 @@ class VideoCamera(object):
         faces = face_cascade.detectMultiScale(image, 1.3, 5)
         for (x, y, w, h) in faces:
             cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            cv2.putText(image, x, (20,20), cv2.FONT_HERSHEY_SIMPLEX, 1, color_yellow, 2)
+            cv2.putText(image, y, (20,40), cv2.FONT_HERSHEY_SIMPLEX, 1, color_yellow, 2)
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
