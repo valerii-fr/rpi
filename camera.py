@@ -12,7 +12,7 @@ act = 0                         #0 - stop, 1 - left, 2 - right, 3 - forward, 4 -
 spd = 128                       #PWM motor speed control
 angle_h = 90                    #laser servo horizontal angle (90 - center)
 angle_v = 90                    #laser servo vertical angle (90 - center)
-laser_i = 128                   #laser intensity
+laser_i = 0                   #laser intensity
 
 data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
 json_str = json.dumps(data_set)
@@ -84,12 +84,5 @@ class VideoCamera(object):
                 timeout_obj.cancel()
                 newTimer()
                 timeout_obj.start()
-            if ((x > 159) & (x < 320)):
-                act = 0
-                spd = 0
-                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-                json_str = json.dumps(data_set)
-                print(json_str)
-                ser.write(str(json_str) .encode('ascii'))
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
