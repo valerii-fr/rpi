@@ -2,14 +2,15 @@
 import cv2
 face_cascade = cv2.CascadeClassifier('/home/pi/downloads/opencv-master/data/haarcascades/haarcascade_frontalface_default.xml')
 color_yellow = (0,255,255)
+
 class VideoCamera(object):
     def stop_by_timer():
-    act = 0
-    spd = 0
-    data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
-    json_str = json.dumps(data_set)
-    print(json_str)
-    ser.write(str(json_str) .encode('ascii'))
+        act = 0
+        spd = 0
+        data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+        json_str = json.dumps(data_set)
+        print(json_str)
+        ser.write(str(json_str) .encode('ascii'))
     
     def newTimer():
         global timeout_obj
