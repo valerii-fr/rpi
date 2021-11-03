@@ -1,7 +1,18 @@
 #!/usr/bin/env python
 import cv2
+from threading import Timer
+import serial
+import time
+import threading
+import json
+
 face_cascade = cv2.CascadeClassifier('/home/pi/downloads/opencv-master/data/haarcascades/haarcascade_frontalface_default.xml')
 color_yellow = (0,255,255)
+act = 0                         #0 - stop, 1 - left, 2 - right, 3 - forward, 4 - back
+spd = 128                       #PWM motor speed control
+angle_h = 90                    #laser servo horizontal angle (90 - center)
+angle_v = 90                    #laser servo vertical angle (90 - center)
+laser_i = 128                   #laser intensity
 
 class VideoCamera(object):
     def stop_by_timer():
