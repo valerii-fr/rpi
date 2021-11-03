@@ -81,6 +81,11 @@ class VideoCamera(object):
                 newTimer()
                 timeout_obj.start()
             if ((x > 159) & (x < 320)):
-                stop_by_timer()
+                act = 0
+                spd = 0
+                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                json_str = json.dumps(data_set)
+                print(json_str)
+                ser.write(str(json_str) .encode('ascii'))
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
