@@ -14,6 +14,11 @@ angle_h = 90                    #laser servo horizontal angle (90 - center)
 angle_v = 90                    #laser servo vertical angle (90 - center)
 laser_i = 128                   #laser intensity
 
+data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+json_str = json.dumps(data_set)
+ser = serial.Serial('/dev/ttyS0', 19200, timeout=1)
+ser.flush()
+
 class VideoCamera(object):
     def stop_by_timer():
         act = 0
