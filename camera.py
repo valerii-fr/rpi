@@ -1,8 +1,20 @@
 #!/usr/bin/env python
 import cv2
-import video
 face_cascade = cv2.CascadeClassifier('/home/pi/downloads/opencv-master/data/haarcascades/haarcascade_frontalface_default.xml')
+color_yellow = (0,255,255)
 class VideoCamera(object):
+    def stop_by_timer():
+    act = 0
+    spd = 0
+    data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+    json_str = json.dumps(data_set)
+    print(json_str)
+    ser.write(str(json_str) .encode('ascii'))
+    
+    def newTimer():
+        global timeout_obj
+        timeout_obj = Timer(0.1, stop_by_timer)
+        
     def __init__(self):
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
@@ -28,7 +40,28 @@ class VideoCamera(object):
         faces = face_cascade.detectMultiScale(image, 1.3, 5)
         for (x, y, w, h) in faces:
             cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            cv2.putText(image, str(x), (0,20), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, color_yellow, 1)
-            cv2.putText(image, str(y), (0,40), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, color_yellow, 1)
+            cv2.putText(image, str(x), (0,20), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.5, color_yellow, 1)
+            cv2.putText(image, str(y), (0,40), cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.5, color_yellow, 1)
+            if x < 160:
+                act = 1
+                spd = 100
+                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                json_str = json.dumps(data_set)
+                print(json_str)
+                ser.write(str(json_str) .encode('ascii'))
+                timeout_obj.cancel()
+                newTimer()
+                timeout_obj.start()
+            if x > 320:
+                act = 2
+                spd = 100
+                data_set = {"act":act, "spd":spd, "angle_v":angle_v, "angle_h":angle_h, "laser_i":laser_i}
+                json_str = json.dumps(data_set)
+                print(json_str)
+                ser.write(str(json_str) .encode('ascii'))
+                timeout_obj.cancel()
+                newTimer()
+                timeout_obj.start()
+                
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
