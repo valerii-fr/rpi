@@ -31,6 +31,7 @@ class VideoCamera(object):
     def newTimer():
         global timeout_obj
         timeout_obj = Timer(0.1, stop_by_timer)
+    newTimer() 
         
     def __init__(self):
         # Using OpenCV to capture from device 0. If you have trouble capturing
