@@ -2,6 +2,7 @@ import cv2
 import  pyshine as ps
 from cv2 import CascadeClassifier
 import sys
+import numpy
 HTML="""
 <html>
 <head>
@@ -17,7 +18,7 @@ HTML="""
 def main():
     StreamProps = ps.StreamProps
     StreamProps.set_Page(StreamProps,HTML)
-    address = ('192.168.1.1',9000) # Enter your IP address 
+    address = ('192.168.1.102',9000) # Enter your IP address 
     try:
         face_cascade = cv2.CascadeClassifier('/home/pi/downloads/opencv-master/data/haarcascades/haarcascade_frontalface_default.xml')
         StreamProps.set_Mode(StreamProps,'cv2')
@@ -28,7 +29,7 @@ def main():
         capture.set(cv2.CAP_PROP_FPS,30)
         ret, frame = capture.read()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = faceCascade.detectMultiScale(
+        faces = face_cascade.detectMultiScale(
             gray,
             scaleFactor=1.1,
             minNeighbors=5,
@@ -37,7 +38,8 @@ def main():
         # Draw a rectangle around the faces
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        StreamProps.set_Capture(StreamProps,capture)
+        cv2.imshow('Video', frame)
+        StreamProps.set_Capture(StreamProps,frame)
         StreamProps.set_Quality(StreamProps,90)
         server = ps.Streamer(address,StreamProps)
         print('Server started at','http://'+address[0]+':'+str(address[1]))
